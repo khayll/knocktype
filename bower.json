@@ -1,0 +1,24 @@
+{
+  "name": "knocktype",
+  "description": "SP app template using Knockout and Typescript",
+  "main": "main.ts",
+  "authors": [
+    "khayll"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "knockout",
+    "typescript"
+  ],
+  "homepage": "https://github.com/khayll/knocktype",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "knockout": "^3.4.1"
+  }
+}
