@@ -1,7 +1,7 @@
 module.exports = (gulp, plugins, config, etc) => {
     return () => {
         etc.log('Compiling sass to css...');
-        return gulp.src(config.allSass)
+        return gulp.src(config.sassFiles)
             .pipe(plugins.if(etc.args.verbose, plugins.print()))
             .pipe(plugins.plumber())
             .pipe(plugins.sourcemaps.init())
