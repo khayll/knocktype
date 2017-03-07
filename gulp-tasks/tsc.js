@@ -13,7 +13,11 @@ module.exports = (gulp, plugins, config, log, mode) => {
         return tsProject.src()
             .pipe(plugins.if(args.verbose, plugins.print()))
             .pipe(tsProject())
-            .js.pipe(gulp.dest(config.build))
+            .js.pipe(plugins.jsTextInject({
+                basepath: config.build,
+                debug: true
+            }))
+            .pipe(gulp.dest(config.build))
             .pipe(browserSync.reload({ stream: true }));
     }
 }

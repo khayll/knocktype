@@ -22,7 +22,7 @@ var getTask = (task, param) => {
 
 // typescript
 gulp.task('tsc-release', ['tsc-cleanup'], getTask('tsc', 'release'));
-gulp.task('tsc', ['tsc-cleanup'], getTask('tsc'));
+gulp.task('tsc', ['tsc-cleanup', 'build-html-copy'], getTask('tsc'));
 gulp.task('tsc-cleanup', getTask('cleanup', config.build + '**/*.js'));
 
 // styles (sass)
@@ -60,7 +60,7 @@ gulp.task('default', ['dev-build'], () => {
 });
 
 gulp.task('watch', ['browser-sync'], () => {
-    gulp.watch([config.tsFiles], ['tsc']);
+    gulp.watch([config.tsFiles, config.htmlFiles], ['tsc']);
     gulp.watch([config.sassFiles], ['styles']);
     gulp.watch([config.htmlFiles], ['inject']);
 });
