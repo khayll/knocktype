@@ -1,7 +1,11 @@
-module.exports = (gulp, plugins, config, etc) => {
+module.exports = (gulp, plugins, config, log) => {
     return () => {
         var browserSync = require('browser-sync');
-        etc.log('Starting browser-sync...');
+        if ( browserSync.active ) {
+            log('Browser-sync already active...');
+            return;
+        }
+        log('Starting browser-sync...');
         browserSync({
             injectChanges: true,
             ui: false,
@@ -15,5 +19,3 @@ module.exports = (gulp, plugins, config, etc) => {
 
     }
 }
-
-

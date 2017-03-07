@@ -2,11 +2,17 @@ module.exports = function() {
 
     var tsFiles = './src/**/*.ts';
     var typings = './node_modules/@types/**/*.d.ts';
+    var build = './build/';
 
     var config = {
         // temporary build location
-        build: './build/',
-        requireConfig: 'require.config.js',
+        build: build,
+
+        // inject these JS files into index.html
+        injectJsFiles: [
+            build + 'app.js',
+            build + 'require.config.js'
+        ],
 
         /**
          * typescript related options
@@ -20,6 +26,7 @@ module.exports = function() {
 
         // typescript copiler config file
         tsConfig: './tsconfig.json',
+        tsConfigRelease: './tsconfig.release.json',
 
         /**
          * styles related options

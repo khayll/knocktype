@@ -1,13 +1,16 @@
-module.exports = (gulp, plugins, config, etc) => {
+module.exports = (gulp, plugins, config, log) => {
     return () => {
-        etc.log('Compiling sass to css...');
+        var browserSync = require('browser-sync');
+        var args = require('yargs').argv;
+        log('Compiling sass to css...');
         return gulp.src(config.sassFiles)
-            .pipe(plugins.if(etc.args.verbose, plugins.print()))
+            .pipe(plugins.if(args.verbose, plugins.print()))
             .pipe(plugins.plumber())
             .pipe(plugins.sourcemaps.init())
             .pipe(plugins.sass())
             .pipe(plugins.autoprefixer(config.autoprefixerOptions))
             .pipe(plugins.sourcemaps.write())
-            .pipe(gulp.dest(config.build));        
+            .pipe(gulp.dest(config.build))
+            .pipe(browserSync.reload({ stream: true }))            
     }
 }

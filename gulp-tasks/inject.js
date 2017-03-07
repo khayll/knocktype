@@ -1,6 +1,6 @@
-module.exports = (gulp, plugins, config, etc) => {
+module.exports = (gulp, plugins, config, log) => {
     return () => {
-        etc.log('Injecting css...');
+        log('Injecting css...');
         return gulp.src(config.build + config.index)
             .pipe(plugins.inject(gulp.src(config.build + '/**/*.css')))
             .pipe(gulp.dest(config.build));

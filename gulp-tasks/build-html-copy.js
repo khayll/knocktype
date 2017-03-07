@@ -1,6 +1,6 @@
-module.exports = (gulp, plugins, config, etc) => {
+module.exports = (gulp, plugins, config, log) => {
     return () => {
-        etc.log('Copying html files to build...');
+        log('Copying html files to build...');
         return gulp.src(config.htmlFiles)
             .pipe(gulp.dest(config.build));
     }

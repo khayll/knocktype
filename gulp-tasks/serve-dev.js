@@ -1,4 +1,4 @@
-module.exports = (gulp, plugins, config, etc) => {
+module.exports = (gulp, plugins, config, log) => {
     return () => {
         var isDev = true;
 

@@ -1,7 +1,7 @@
-module.exports = (gulp, plugins, config, etc) => {
+module.exports = (gulp, plugins, config, log) => {
     return () => {
         var browserSync = require('browser-sync');
-        etc.log('Browser-sync reload...');
+        log('Browser-sync reload...');
         browserSync.reload();
     }
 }

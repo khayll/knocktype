@@ -10,20 +10,8 @@
         <!-- endinject -->
     </head>
     <body>
-        <div class="hello">
-            <p>
-                Hello from
-                <strong data-bind="text: language">todo</strong>
-                and
-                <strong data-bind="text: framework">todo</strong>!
-            </p>
-
-            <p>Language: <input data-bind="value: language" /></p>
-            <p>Framework: <input data-bind="value: framework" /></p>
-        </div>
-
-        <!-- bower:js -->
-        <!-- endbower -->
+        <hello params="language: 'TypeScript', framework: 'Knockout'"></hello>
+        <script src="../bower_components/requirejs/require.js"></script>
 
         <!-- inject:js -->
         <!-- endinject -->
@@ -31,6 +19,6 @@
         <script>
             require(["main"]);
         </script>
-        
+
     </body>
 </html>

@@ -1,4 +1,6 @@
-import {HelloViewModel} from "./hello";
+import * as ko from "knockout";
+import {HelloViewModel} from "./components/hello";
 
-ko.applyBindings(new HelloViewModel("TypeScript", "Knockout"));
+ko.components.register('hello', {viewModel: HelloViewModel, template: HelloViewModel.template });
 
+ko.applyBindings();

@@ -1,0 +1,17 @@
+{
+    "extends": "./tsconfig.json", // this currently does not work with gulp-typescript, hence including all previous options
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "target": "es5",
+        "sourceMap": true,
+        "module": "amd",
+        "experimentalDecorators": true,
+        // additions to base
+        "outFile": "app.js",
+        "sourceMap": false,
+        "removeComments": true    
+    },
+    "include": [
+    "src/**/*.ts"
+    ]    
+}
