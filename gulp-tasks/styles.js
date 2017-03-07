@@ -1,16 +1,20 @@
-module.exports = (gulp, plugins, config, log) => {
+module.exports = (gulp, plugins, config, log, mode) => {
     return () => {
         var browserSync = require('browser-sync');
         var args = require('yargs').argv;
         log('Compiling sass to css...');
-        return gulp.src(config.sassFiles)
+        var stream = gulp.src(config.sassFiles)
             .pipe(plugins.if(args.verbose, plugins.print()))
-            .pipe(plugins.plumber())
-            .pipe(plugins.sourcemaps.init())
-            .pipe(plugins.sass())
+            .pipe(plugins.plumber());
+        if ( 'release' !== mode ) {
+            stream = stream.pipe(plugins.sourcemaps.init())
+        }
+        stream = stream.pipe(plugins.sass())
             .pipe(plugins.autoprefixer(config.autoprefixerOptions))
-            .pipe(plugins.sourcemaps.write())
-            .pipe(gulp.dest(config.build))
-            .pipe(browserSync.reload({ stream: true }))            
+        if ( 'release' !== mode ) {
+            stream = stream.pipe(plugins.sourcemaps.write())
+        }
+        stream = stream.pipe(gulp.dest(config.build));
+        return stream;
     }
 }

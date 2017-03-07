@@ -12,9 +12,10 @@ module.exports = (gulp, plugins, config, log) => {
             notify: false,
             ghostMode: false,
             server: {
-            baseDir: './',
-            index: config.build + config.index
-            }
+                baseDir: './',
+                index: config.build + config.index
+            },
+            files: config.build + '**/*'
         });
 
     }

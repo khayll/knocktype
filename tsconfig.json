@@ -4,7 +4,8 @@
     "target": "es5",
     "sourceMap": true,
     "module": "amd",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "inlineSources": true
   },
   "include": [
     "src/**/*.ts"

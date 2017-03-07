@@ -21,19 +21,22 @@ var getTask = (task, param) => {
 }
 
 // typescript
-gulp.task('tsc-release', ['tsc-cleanup'], getTask('tsc', 'release'));
+gulp.task('tsc-release', ['tsc-cleanup', 'build-html-copy'], getTask('tsc', 'release'));
 gulp.task('tsc', ['tsc-cleanup', 'build-html-copy'], getTask('tsc'));
 gulp.task('tsc-cleanup', getTask('cleanup', config.build + '**/*.js'));
 
 // styles (sass)
 gulp.task('styles', ['styles-cleanup'], getTask('styles'));
+gulp.task('styles-release', ['styles-cleanup'], getTask('styles', 'release'));
 gulp.task('styles-cleanup', getTask('cleanup', config.build + '**/*.css'));
 
 // wiredep and inject
-gulp.task('wiredep', ['tsc', 'build-html-copy'], getTask('wiredep'));
 gulp.task('inject', ['wiredep', 'styles'], getTask('inject'));
+gulp.task('wiredep', ['tsc', 'build-html-copy'], getTask('wiredep'));
+gulp.task('inject-release', ['wiredep-release', 'styles-release'], getTask('inject', 'release'));
+gulp.task('wiredep-release', ['tsc-release'], getTask('wiredep', 'release'));
 
-// buld html copy
+// build html copy
 gulp.task('build-html-copy', ['html-cleanup'], getTask('build-html-copy'));
 gulp.task('html-cleanup', getTask('cleanup', config.build + '**/*.html'));
 
@@ -41,8 +44,8 @@ gulp.task('html-cleanup', getTask('cleanup', config.build + '**/*.html'));
 gulp.task('serve-dev', ['inject'], getTask('serve-dev'));
 
 // browser sync
-gulp.task('browser-sync', ['inject'], getTask('browser-sync'));
-gulp.task('bs-reload', ['inject'], getTask('bs-reload'));
+gulp.task('browser-sync', getTask('browser-sync'));
+gulp.task('bs-reload', getTask('bs-reload'));
 
 /**
  * general tasks
@@ -59,8 +62,14 @@ gulp.task('default', ['dev-build'], () => {
         
 });
 
-gulp.task('watch', ['browser-sync'], () => {
+gulp.task('watch', ['inject','browser-sync'], () => {
     gulp.watch([config.tsFiles, config.htmlFiles], ['tsc']);
     gulp.watch([config.sassFiles], ['styles']);
     gulp.watch([config.htmlFiles], ['inject']);
+});
+
+gulp.task('release-watch', ['inject-release','browser-sync'], () => {
+    gulp.watch([config.tsFiles, config.htmlFiles], ['tsc-release']);
+    gulp.watch([config.sassFiles], ['styles-release']);
+    gulp.watch([config.htmlFiles], ['inject-release']);
 });

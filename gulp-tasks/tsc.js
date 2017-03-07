@@ -10,14 +10,20 @@ module.exports = (gulp, plugins, config, log, mode) => {
             log('Compiling typescript files in dev mode...');
             var tsProject = plugins.typescript.createProject(config.tsConfig);
         }
-        return tsProject.src()
+        var stream = tsProject.src()
             .pipe(plugins.if(args.verbose, plugins.print()))
             .pipe(tsProject())
             .js.pipe(plugins.jsTextInject({
                 basepath: config.build,
                 debug: true
-            }))
-            .pipe(gulp.dest(config.build))
-            .pipe(browserSync.reload({ stream: true }));
+            }));
+        if ( mode === 'release' ) {
+            stream = stream.pipe(plugins.plumber())
+                .pipe(plugins.uglify());
+        }
+        stream = stream.pipe(gulp.dest(config.build));
+            //.pipe(browserSync.reload({ stream: true }));
+
+        return stream;
     }
 }
