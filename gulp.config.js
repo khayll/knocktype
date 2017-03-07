@@ -1,16 +1,32 @@
 module.exports = function() {
+
+    var tsFiles = './src/**/*.ts';
+    var typings = './node_modules/@types/**/*.d.ts';
+
     var config = {
         // temporary build location
         build: './build/',
+        requireConfig: 'require.config.js',
+
+        /**
+         * typescript related options
+         */
 
         // typescript files to compile
-        allTs: ['./src/**/*.ts'],
+        tsFiles: tsFiles,
+
+        // files to put into the tsconfig.json
+        allTs: [typings, tsFiles],
 
         // typescript copiler config file
         tsConfig: './tsconfig.json',
 
+        /**
+         * styles related options
+         */
+
         // sass files to precompile
-        allSass: './src/**/*.scss',
+        sassFiles: './src/**/*.scss',
 
         //options for autoprefixer
         autoprefixerOptions: {
@@ -20,12 +36,28 @@ module.exports = function() {
             ]
         },
 
-        index: 'index.html'
+        /** 
+         * html files
+         * */
+        index: 'index.html',
+        htmlFiles: './src/**/*.html',
 
+        /**
+         * bower config
+         */
+        bower: {
+            json: require('./bower.json'),
+            directory: './bower_components',
+            ignorePath: '../..'
+        },
     };
 
     config.getWiredepOptions = () => {
-
+        var options = {
+            bowerJson: config.bower.json,
+            directory: config.bower.directory,
+            ignorePath: config.bower.ignorePath
+        }
     }
 
     return config;

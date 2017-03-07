@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')({lazy: true});
 var config = require('./gulp.config')();
 
-var del = require('del');
+var browserSync = require('browser-sync');
 
 var log = (msg) => {
     if ( typeof(msg) === 'object' ) {
@@ -17,6 +17,7 @@ var log = (msg) => {
 };
 
 var cleanup = (files, done) => {
+    var del = require('del');
     log('Cleaning up ' + files);
     del(files);
     done();
@@ -24,7 +25,6 @@ var cleanup = (files, done) => {
 
 var etc = {
     args: require('yargs').argv,
-    del: del,
     log: log,
     cleanup: cleanup
 }
@@ -45,13 +45,24 @@ gulp.task('styles', ['styles-cleanup'], getTask('styles'));
 gulp.task('styles-cleanup', getTask('styles-cleanup'));
 
 // wiredep and inject
-gulp.task('wiredep', getTask('wiredep'));
+gulp.task('wiredep', ['tsc', 'build-html-copy'], getTask('wiredep'));
+gulp.task('inject', ['wiredep', 'styles'], getTask('inject'));
+
+// buld html copy
+gulp.task('build-html-copy', ['html-cleanup'], getTask('build-html-copy'));
+gulp.task('html-cleanup', getTask('html-cleanup'));
+
+// buld html copy
+gulp.task('serve-dev', ['inject'], getTask('serve-dev'));
+
+// browser sync
+gulp.task('browser-sync', ['inject'], getTask('browser-sync'));
+gulp.task('bs-reload', ['inject'], getTask('bs-reload'));
 
 /**
  * general tasks
  */
-
-gulp.task('release', ['styles', 'tsc'], () => {
+gulp.task('release', ['styles', 'tsc', 'inject'], () => {
 
 });
 
@@ -59,9 +70,8 @@ gulp.task('default', ['release'], () => {
     
 });
 
-gulp.task('watch', () => {
-    gulp.watch([config.allTs], ['tsc']);
-    gulp.watch([config.allSass], ['styles']);    
+gulp.task('watch', ['browser-sync'], () => {
+    gulp.watch([config.tsFiles], ['tsc']);
+    gulp.watch([config.sassFiles], ['styles']);
+    gulp.watch([config.htmlFiles], ['inject']);
 });
-
-

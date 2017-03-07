@@ -1,6 +1,7 @@
 declare var require: any;
 require.config({
+    baseUrl: 'build',
     paths: {
-        "knockout": "externals/knockout-3.4.0",
+        "knockout": "knockout",
     }
 });

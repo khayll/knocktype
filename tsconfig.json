@@ -2,10 +2,13 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "target": "es5",
-    "sourceMap": true
+    "sourceMap": true,
+    "module": "amd"
   },
   "files": [
-    "src/hello.ts",
-    "src/require.config.ts"
+    "node_modules\\@types\\knockout\\index.d.ts",
+    "src\\hello.ts",
+    "src\\main.ts",
+    "src\\require.config.ts"
   ]
 }

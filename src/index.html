@@ -3,6 +3,11 @@
     <head>
         <meta charset="UTF-8" />
         <title>Hello Knockout!</title>
+        <!-- bower:css -->
+        <!-- endbower -->
+
+        <!-- inject:css -->
+        <!-- endinject -->
     </head>
     <body>
         <div class="hello">
@@ -17,10 +22,15 @@
             <p>Framework: <input data-bind="value: framework" /></p>
         </div>
 
-        <script src="./externals/require.js"></script>
-        <script src="./built/require-config.js"></script>
+        <!-- bower:js -->
+        <!-- endbower -->
+
+        <!-- inject:js -->
+        <!-- endinject -->
+
         <script>
-            require(["built/hello"]);
+            require(["main"]);
         </script>
+        
     </body>
 </html>
