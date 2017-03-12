@@ -1,8 +1,8 @@
 declare var require: any;
 
 require.config({
-    baseUrl: '/build/',
+    baseUrl: './',
     paths: {
-        "knockout": "../bower_components/knockout/dist/knockout"
+        "knockout": "lib/knockout/dist/knockout"
     }
 });

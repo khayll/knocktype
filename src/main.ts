@@ -1,6 +1,6 @@
 import * as ko from "knockout";
-import {HelloViewModel} from "./components/hello/hello";
+import {Hello} from "./components/Hello/Hello";
 
-ko.components.register('hello', {viewModel: HelloViewModel, template: HelloViewModel.template });
+ko.components.register('hello', {viewModel: Hello, template: Hello.template });
 
 ko.applyBindings();

@@ -5,7 +5,8 @@
     "sourceMap": true,
     "module": "amd",
     "experimentalDecorators": true,
-    "inlineSources": true
+    "inlineSources": true,
+    "outFile": "app.js"
   },
   "include": [
     "src/**/*.ts"

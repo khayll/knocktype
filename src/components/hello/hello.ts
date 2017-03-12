@@ -2,7 +2,11 @@ import * as ko from "knockout";
 
 declare var injectHtml: any;
 
-export class HelloViewModel {
+export class Hello {
+
+    public static template: string = `
+//=include Hello.html
+    `;
 
     language: KnockoutObservable<string>
     framework: KnockoutObservable<string>
@@ -11,7 +15,5 @@ export class HelloViewModel {
         this.language = ko.observable(params.language);
         this.framework = ko.observable(params.framework);
     }
-
-    public static template: string = '@@import components/hello/hello.html';    
 
 }

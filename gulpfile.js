@@ -1,75 +1,72 @@
 var gulp = require('gulp');
-var plugins = require('gulp-load-plugins')({lazy: true});
-var config = require('./gulp.config')();
-
+var $ = require('gulp-load-plugins')({lazy: true});
+var del = require('del');
 var browserSync = require('browser-sync');
+
+var config = require('./gulp.config')();
 
 var log = (msg) => {
     if ( typeof(msg) === 'object' ) {
         for ( var item in msg ) {
             if ( msg.hasOwnProperty(item) ) {
-                plugins.util.log(plugins.util.colors.blue(msg[item]));
+                $.util.log($.util.colors.blue(msg[item]));
             }
         }
     } else {
-        plugins.util.log(plugins.util.colors.blue(msg));
+        $.util.log($.util.colors.blue(msg));
     }
 };
 
-var getTask = (task, param) => {
-    return require('./gulp-tasks/' + task)(gulp, plugins, config, log, param);
-}
-
-// typescript
-gulp.task('tsc-release', ['tsc-cleanup', 'build-html-copy'], getTask('tsc', 'release'));
-gulp.task('tsc', ['tsc-cleanup', 'build-html-copy'], getTask('tsc'));
-gulp.task('tsc-cleanup', getTask('cleanup', config.build + '**/*.js'));
-
-// styles (sass)
-gulp.task('styles', ['styles-cleanup'], getTask('styles'));
-gulp.task('styles-release', ['styles-cleanup'], getTask('styles', 'release'));
-gulp.task('styles-cleanup', getTask('cleanup', config.build + '**/*.css'));
-
-// wiredep and inject
-gulp.task('inject', ['wiredep', 'styles'], getTask('inject'));
-gulp.task('wiredep', ['tsc', 'build-html-copy'], getTask('wiredep'));
-gulp.task('inject-release', ['wiredep-release', 'styles-release'], getTask('inject', 'release'));
-gulp.task('wiredep-release', ['tsc-release'], getTask('wiredep', 'release'));
-
-// build html copy
-gulp.task('build-html-copy', ['html-cleanup'], getTask('build-html-copy'));
-gulp.task('html-cleanup', getTask('cleanup', config.build + '**/*.html'));
-
-// dev dummy backend
-gulp.task('serve-dev', ['inject'], getTask('serve-dev'));
-
-// browser sync
-gulp.task('browser-sync', getTask('browser-sync'));
-gulp.task('bs-reload', getTask('bs-reload'));
-
-/**
- * general tasks
- */
-gulp.task('build-cleanup', getTask('cleanup', config.build + '**/*'));
-
-gulp.task('dev-build', ['styles', 'tsc', 'inject'], () => {
+gulp.task('clean', () => {
+    return del(config.dist + '/**/*');
 });
 
-gulp.task('release', ['tsc-release'], () => {
+gulp.task('tsc', () => {
+    var tsProject = $.typescript.createProject(config.tsConfig);
+    return tsProject.src()
+        .pipe($.plumber())
+        .pipe($.include())
+        .pipe($.sourcemaps.init())
+        .pipe(tsProject()).js
+        .pipe($.sourcemaps.write())
+        .pipe(gulp.dest(config.dist))
+        .pipe($.uglify())
+        .pipe($.rename({suffix: '.min'}))
+        .pipe(gulp.dest(config.dist))
+        .pipe(browserSync.reload({ stream: true }));
 });
 
-gulp.task('default', ['dev-build'], () => {
-        
+gulp.task('sass', () => {
+    return gulp.src(config.sassFiles)
+        .pipe($.sourcemaps.init())
+        .pipe($.sass())
+        .on('error', $.sass.logError)
+        .pipe($.autoprefixer(config.autoprefixerOptions))
+        .pipe($.sourcemaps.write())
+        .pipe($.concat('styles.css'))
+        .pipe(gulp.dest(config.dist))
+        .pipe($.cssnano())
+        .pipe($.rename({suffix: '.min'}))
+        .pipe(gulp.dest(config.dist))
+        .pipe(browserSync.reload({ stream: true }));        
 });
 
-gulp.task('watch', ['inject','browser-sync'], () => {
+gulp.task('index', () => {
+    return gulp.src(config.src + config.index)
+        .pipe(gulp.dest(config.dist));
+});
+
+gulp.task('browser-sync', () => {
+    log('Starting browser-sync...');
+    browserSync(config.getBrowserSyncOptions());
+});
+
+gulp.task('default', ['build'], () => {});
+
+gulp.task('build', ['tsc', 'sass', 'index'], () => {});
+
+gulp.task('watch', ['browser-sync', 'build'], () => {
+    gulp.watch([config.src + config.index], ['index']);
     gulp.watch([config.tsFiles, config.htmlFiles], ['tsc']);
-    gulp.watch([config.sassFiles], ['styles']);
-    gulp.watch([config.htmlFiles], ['inject']);
-});
-
-gulp.task('release-watch', ['inject-release','browser-sync'], () => {
-    gulp.watch([config.tsFiles, config.htmlFiles], ['tsc-release']);
-    gulp.watch([config.sassFiles], ['styles-release']);
-    gulp.watch([config.htmlFiles], ['inject-release']);
+    gulp.watch([config.sassFiles], ['sass']);
 });
