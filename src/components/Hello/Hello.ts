@@ -1,12 +1,14 @@
 import * as ko from "knockout";
-
+import { koComponent } from "../../framework/koComponent";
 declare var injectHtml: any;
 
-export class Hello {
-
-    public static template: string = `
+@koComponent({
+    selector: 'hello',
+    template: `
 //=include Hello.html
-    `;
+    `
+})
+export class Hello {
 
     language: KnockoutObservable<string>
     framework: KnockoutObservable<string>
