@@ -1,8 +1,7 @@
 import * as ko from "knockout";
-import { koComponent } from "../../framework/koComponent";
-declare var injectHtml: any;
+import { component } from "../../framework/component";
 
-@koComponent({
+@component({
     selector: 'hello',
     template: `
 //=include Hello.html
