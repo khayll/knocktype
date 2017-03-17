@@ -24,13 +24,9 @@ export class Knocktype {
   }
 
   /**
-   * bootsrap the container. registers components with knockout. creates singleton services.
+   * bootsrap the container. registers components with knockout.
    */
   public bootstrap(): void {
-
-    for ( let service of this.services )  {
-
-    }
 
     for ( let component of this.components ) {
       this.registerComponent(component.constructor, component.selector, component.template);
