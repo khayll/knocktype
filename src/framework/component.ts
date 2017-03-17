@@ -6,18 +6,15 @@ interface ComponentOptions {
     templateUrl?: string;
 }
 
-export function component(options: ComponentOptions): Function {
+export default function component(options: ComponentOptions): Function {
     return (constructor: Function): void => {
         if ( options.template === undefined && options.templateUrl === undefined ) {
             throw new Error('Either template or templateUrl must be specified');
         }
-        // TODO: handle templateUrl        
-        registerComponent(constructor, options.selector, options.template);
-    }
-}
 
-function registerComponent(constructor: Function, selector: string, template: string): void {
-    if ( !ko.components.isRegistered(selector) ) {
-        ko.components.register(selector, {viewModel: constructor, template: template});
-    } 
+        constructor.prototype.selector = options.selector;
+        constructor.prototype.template = options.template;
+        constructor.prototype.templateUrl = options.templateUrl;
+
+    }
 }

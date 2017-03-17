@@ -1,5 +1,5 @@
 import * as ko from "knockout";
-import { component } from "../../framework/component";
+import component from "../../framework/component";
 
 @component({
     selector: 'hello',
@@ -7,7 +7,7 @@ import { component } from "../../framework/component";
 //=include Hello.html
     `
 })
-export class Hello {
+export default class Hello {
 
     language: KnockoutObservable<string>
     framework: KnockoutObservable<string>
