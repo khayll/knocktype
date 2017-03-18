@@ -35,7 +35,23 @@ export class Hello {
 Components defined with the `@component` decorator are registered with 
 `knocktype.component(Hello.prototype);` into the application container.
 
-However they are only registered into Knockout once `knocktype.bootstrap();` is called;
+However they are only registered into Knockout once `knocktype.bootstrap();` is called, like this:
+
+```javascript
+import Hello from "./components/Hello/Hello";
+import knocktype from './framework/Knocktype';
+
+export class App {
+  
+  constructor() {
+    knocktype.component(Hello.prototype);
+    knocktype.bootstrap();
+  }
+
+}
+```
+
+
 
 ### Services
 
