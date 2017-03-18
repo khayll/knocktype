@@ -1,6 +1,9 @@
 import * as $ from "jquery";
+import * as ko from 'knockout';
+import service from '../framework/service';
 
-class HttpService {
+@service
+export default class HttpService {
 
     constructor() {
 
@@ -21,5 +24,3 @@ class HttpService {
     }
 
 }
-
-export default HttpService.get;
