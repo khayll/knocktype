@@ -6,7 +6,7 @@
 
 ### Using requirejs
 
-RequireJS is used to handle dependencies. 
+RequireJS is used to handle dependencies.
 
 ### Application container
 
@@ -55,7 +55,7 @@ export class App {
 
 ### Services
 
-Services are singleton objects. They are registered by name into the application container. To define a service you need the following. Note, that services cannot have constructor parameters.
+Services are singletons, and are registered by name into the application container. To define a service you only need to put the `@service` decorator on the object definition. Note, that services cannot have constructor parameters.
 
 ```javascript
 import service from '../framework/service';
@@ -68,7 +68,7 @@ export default class HttpService {
 }
 ```
 
-To get hold of the singleton instance, use:
+To get the reference for the singleton instance, just simply use `new`, in the background this will create the sinlgeton instance, or it will return the reference.
 
 ```javascript
 import HttpService from '../../services/HttpService';
