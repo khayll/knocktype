@@ -10,7 +10,7 @@ export default class HttpService {
     }
 
     public static async get(): Promise<HttpService> {
-        return new Promise<HttpService>( (resolve, reject) => {
+        return new Promise<HttpService>( (resolve: Function, reject: Function) => {
 
             if ( !ko.components.isRegistered((<any>HttpService).name) ) {
                 ko.components.register((<any>HttpService).name, 

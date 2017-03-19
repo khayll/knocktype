@@ -6,7 +6,13 @@
     "module": "amd",
     "experimentalDecorators": true,
     "inlineSources": true,
-    "outFile": "app.js"
+    "outFile": "app.js",
+    "lib": [
+      "ES2015",
+      "DOM",
+      "ES5",
+      "ScriptHost"
+    ]
   },
   "include": [
     "src/**/*.ts"
