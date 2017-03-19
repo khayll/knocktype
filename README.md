@@ -10,10 +10,19 @@ RequireJS is used to handle dependencies.
 
 ### Application container
 
-Application container is defined globally in `window.knocktype`. All you need to do is
-`import knocktype from './framework/Knocktype';`
+Application container is defined globally in `window.knocktype`. This also means, that in the current form it's not possible to have multiple applications in the same window.
+The container is initialized, once it's imported and used.
 
 ```javascript
+import knocktype from './framework/Knocktype';
+
+export class App {
+  
+  constructor() {
+    knocktype.bootstrap();
+  }
+
+}
 ```
 
 ### Components
