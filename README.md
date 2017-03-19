@@ -1,8 +1,6 @@
-# knocktype [![Build Status](https://travis-ci.org/khayll/knocktype.svg?branch=master)](https://travis-ci.org/khayll/knocktype)
+# Knocktype [![Build Status](https://travis-ci.org/khayll/knocktype.svg?branch=master)](https://travis-ci.org/khayll/knocktype)
 
-- Single page app template using Knockout and Typescript.
-- Includes a minimal application container to keep track of Knockout components and singleton services.
-- Build with Gulp.
+Knocktype is an application container over Knockout, that supports singleton services in addition to components. It's written using  Typescript, and is making use of decorators to conveniently define components and service. This project contains the framework and is a template project as well. 
 
 ### Using requirejs
 
