@@ -28,7 +28,7 @@ export class Knocktype {
    */
   public bootstrap(): void {
 
-    for ( let component of this.components ) {
+    for (let component of this.components) {
       this.registerComponent(component.constructor, component.selector, component.template);
     }
 
@@ -36,8 +36,8 @@ export class Knocktype {
   }
 
   private registerComponent(constructor: Function, selector: string, template: string): void {
-    if ( !ko.components.isRegistered(selector) ) {
-      ko.components.register(selector, {viewModel: constructor, template: template});
+    if (!ko.components.isRegistered(selector)) {
+      ko.components.register(selector, { viewModel: constructor, template: template });
     }
   }
 
@@ -45,7 +45,7 @@ export class Knocktype {
 
 var knocktype;
 
-if ( (<any>window).knocktype === undefined ) {
+if ((<any>window).knocktype === undefined) {
   knocktype = new Knocktype();
   (<any>window).knocktype = knocktype;
 } else {

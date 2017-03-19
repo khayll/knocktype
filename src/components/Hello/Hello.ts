@@ -1,5 +1,6 @@
 import * as ko from "knockout";
 import component from "../../framework/component";
+import HttpService from '../../services/HttpService';
 
 @component({
     selector: 'hello',
@@ -8,6 +9,8 @@ import component from "../../framework/component";
     `
 })
 export default class Hello {
+
+    httpService: HttpService = new HttpService();
 
     language: KnockoutObservable<string>
     framework: KnockoutObservable<string>

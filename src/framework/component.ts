@@ -8,7 +8,7 @@ interface ComponentOptions {
 
 export default function component(options: ComponentOptions): Function {
     return (constructor: Function): void => {
-        if ( options.template === undefined && options.templateUrl === undefined ) {
+        if (options.template === undefined && options.templateUrl === undefined) {
             throw new Error('Either template or templateUrl must be specified');
         }
 
